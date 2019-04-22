@@ -18,12 +18,14 @@ var TagManager = {
     var noScript = function noScript() {
       var noscript = document.createElement('noscript');
       noscript.innerHTML = snippets.iframe;
+      noscript.id = args.wrapperProps.noScript;
       return noscript;
     };
 
     var script = function script() {
       var script = document.createElement('script');
       script.innerHTML = snippets.script;
+      script.id = args.wrapperProps.script;
       return script;
     };
 
@@ -45,7 +47,9 @@ var TagManager = {
         _ref$auth = _ref.auth,
         auth = _ref$auth === undefined ? '' : _ref$auth,
         _ref$preview = _ref.preview,
-        preview = _ref$preview === undefined ? '' : _ref$preview;
+        preview = _ref$preview === undefined ? '' : _ref$preview,
+        _ref$wrapperProps = _ref.wrapperProps,
+        wrapperProps = _ref$wrapperProps === undefined ? {} : _ref$wrapperProps;
 
     var gtm = this.gtm({
       id: gtmId,
@@ -53,7 +57,11 @@ var TagManager = {
       dataLayer: dataLayer || undefined,
       dataLayerName: dataLayerName,
       auth: auth,
-      preview: preview
+      preview: preview,
+      wrapperProps: Object.assign({}, wrapperProps, {
+        scriptId: 'gtm-script',
+        noScriptId: 'gtm-noscript'
+      })
     });
     if (dataLayer) document.head.appendChild(gtm.dataScript);
     document.head.insertBefore(gtm.script(), document.head.childNodes[0]);

@@ -12,12 +12,14 @@ const TagManager = {
     const noScript = () => {
       const noscript = document.createElement('noscript')
       noscript.innerHTML = snippets.iframe
+      noscript.id = args.wrapperProps.noScript
       return noscript
     }
 
     const script = () => {
       const script = document.createElement('script')
       script.innerHTML = snippets.script
+      script.id = args.wrapperProps.script
       return script
     }
 
@@ -29,14 +31,18 @@ const TagManager = {
       dataScript
     }
   },
-  initialize: function ({ gtmId, events = {}, dataLayer, dataLayerName = 'dataLayer', auth = '', preview = '' }) {
+  initialize: function ({ gtmId, events = {}, dataLayer, dataLayerName = 'dataLayer', auth = '', preview = '', wrapperProps = {} }) {
     const gtm = this.gtm({
       id: gtmId,
       events: events,
       dataLayer: dataLayer || undefined,
       dataLayerName: dataLayerName,
       auth,
-      preview
+      preview,
+      wrapperProps: Object.assign({}, wrapperProps, {
+        scriptId: 'gtm-script',
+        noScriptId: 'gtm-noscript'
+      })
     })
     if (dataLayer) document.head.appendChild(gtm.dataScript)
     document.head.insertBefore(gtm.script(), document.head.childNodes[0])
