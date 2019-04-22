@@ -12,14 +12,14 @@ const TagManager = {
     const noScript = () => {
       const noscript = document.createElement('noscript')
       noscript.innerHTML = snippets.iframe
-      noscript.id = args.wrapperProps.noScript
+      noscript.id = args.wrapperProps.noScriptId
       return noscript
     }
 
     const script = () => {
       const script = document.createElement('script')
       script.innerHTML = snippets.script
-      script.id = args.wrapperProps.script
+      script.id = args.wrapperProps.scriptId
       return script
     }
 
